@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-pushy": {
+      "hosting": {
+        "Client": [
+          "angular-pushy"
+        ]
+      }
+    }
+  }
+}
