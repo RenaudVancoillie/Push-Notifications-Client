@@ -14,6 +14,7 @@ import { PushSubscriptionService } from './services/pushSubscriptions/push-subsc
 export class AppComponent {
 
   title: string = "Push Notifications Client";
+  message: string = "Notification!";
 
   constructor(private swPush: SwPush, 
               private keyService: KeyService,
@@ -32,7 +33,7 @@ export class AppComponent {
   sendNotifications() {
     const notification: Notification = {
       title: 'Angular Notification',
-      body: 'Notification body!',
+      body: this.message,
       icon: 'assets/images/exclamation-mark.png',
       vibrate: [100, 50, 100],
       data: {

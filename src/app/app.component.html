@@ -9,6 +9,11 @@
 <body>
   <h1>{{title}}</h1>
   <button (click)="subscribeForNotifications()">Subscribe for Notifications!</button>
-  <button (click)="sendNotifications()">Send Notification!</button>
+  <br />
+  <div>
+    <label for="message">Notification message: </label>
+    <input id="message" [(ngModel)]="message" placeholder="message">
+    <button (click)="sendNotifications()">Send Notification!</button>
+  </div>
 </body>
 </html>
