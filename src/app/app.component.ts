@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
+import { PushSubscriptionService } from './services/pushSubscriptions/push-subscription.service';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,12 @@ export class AppComponent {
   title: string = "Push Notifications Client";
   operation: string = "Subscribe";
 
-  constructor(private swPush: SwPush) { }
+  constructor(private swPush: SwPush, private pushSubscriptionService: PushSubscriptionService) { }
 
   subscribeForNotifications() {
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
-    }).then(subscription => console.log(JSON.stringify(subscription)))
+    }).then(subscription => this.pushSubscriptionService.addPushSubscription(subscription).subscribe())
     .catch(error => console.error(error));
   }
 

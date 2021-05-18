@@ -3,14 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { PushSubscription } from 'src/app/interfaces/PushSubscription';
-
 @Injectable({
   providedIn: 'root'
 })
 export class PushSubscriptionService {
 
-  private url: string = 'https://safe-depths-95733.herokuapp.com/';
+  private url: string = 'https://safe-depths-95733.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +20,9 @@ export class PushSubscriptionService {
       })
     };
 
-    return this.http.post<PushSubscription>(endpoint, subscription, options).pipe(
+    console.log(subscription.toJSON());
+
+    return this.http.post<PushSubscription>(endpoint, subscription.toJSON(), options).pipe(
       catchError(this.handleError<PushSubscription>(`addPushSubscription`, subscription))
     );
   }
@@ -34,5 +34,5 @@ export class PushSubscriptionService {
       return of(result as T);
     }
   }
-  
+
 }
