@@ -20,8 +20,6 @@ export class PushSubscriptionService {
       })
     };
 
-    console.log(subscription.toJSON());
-
     return this.http.post<PushSubscription>(endpoint, subscription.toJSON(), options).pipe(
       catchError(this.handleError<PushSubscription>(`addPushSubscription`, subscription))
     );

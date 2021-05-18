@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { Notification } from './interfaces/notification';
 
+import { KeyService } from './services/keys/key.service';
 import { NotificationService } from './services/notifications/notification.service';
 import { PushSubscriptionService } from './services/pushSubscriptions/push-subscription.service';
 
@@ -12,20 +13,20 @@ import { PushSubscriptionService } from './services/pushSubscriptions/push-subsc
 })
 export class AppComponent {
 
-  readonly VAPID_PUBLIC_KEY = "BLRQpb3GpmIRbkMXU1qymYQ3iQcnWm018Mbv_aCYKSRd1gsUlEmTjzaIJ-vNC1raPYvheLFUYc24HIKyIggxeOs";
-
   title: string = "Push Notifications Client";
-  operation: string = "Subscribe";
 
   constructor(private swPush: SwPush, 
+              private keyService: KeyService,
               private pushSubscriptionService: PushSubscriptionService, 
               private notificationService: NotificationService) { }
 
   subscribeForNotifications() {
-    this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
-    }).then(subscription => this.pushSubscriptionService.addPushSubscription(subscription).subscribe())
-    .catch(error => console.error(error));
+    this.keyService.getVapidPublicKey().subscribe(key => {
+      this.swPush.requestSubscription({
+        serverPublicKey: key.publicKey
+      }).then(subscription => this.pushSubscriptionService.addPushSubscription(subscription).subscribe(subscription => console.log(subscription)))
+      .catch(error => console.error(error));
+    });
   }
 
   sendNotifications() {
