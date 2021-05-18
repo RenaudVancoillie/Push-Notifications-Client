@@ -33,7 +33,7 @@ export class AppComponent {
   sendNotifications() {
     const notification: Notification = {
       title: 'Angular Notification',
-      body: this.message,
+      body: this.message, // INPUT VALIDATION REQUIRED! 
       icon: 'assets/images/exclamation-mark.png',
       vibrate: [100, 50, 100],
       data: {
